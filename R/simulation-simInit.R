@@ -334,6 +334,8 @@ setMethod(
       checkPath(p, create = TRUE)
     )
 
+    #browser()
+
     objNames <- names(objects)
     if (length(objNames) != length(objects)) {
       stop(
@@ -1118,10 +1120,12 @@ simInitAndSpades <- function(times, params, modules, objects, paths, inputs, out
   allObjsProvided <- sim@depends@dependencies[[i]]@inputObjects[["objectName"]] %in%
     sim$.userSuppliedObjNames
   if (!all(allObjsProvided)) {
+    #browser()
     if (!is.null(sim@.xData$.mods[[mBase]][[".inputObjects"]])) {
       browser(expr = exists("._runModuleInputObjects_2"))
-      list2env(objects[sim@depends@dependencies[[i]]@inputObjects[["objectName"]][allObjsProvided]],
-               envir = sim@.xData)
+
+      #list2env(objects[sim@depends@dependencies[[i]]@inputObjects[["objectName"]][allObjsProvided]],
+      #         envir = sim@.xData)
       a <- P(sim, mBase, ".useCache")
       if (!is.null(a)) {
         if (!identical(FALSE, a)) {
@@ -1146,7 +1150,7 @@ simInitAndSpades <- function(times, params, modules, objects, paths, inputs, out
           moduleSpecificObjs <- paste(mBase, ".inputObjects", sep = ":")
           objectsToEvaluateForCaching <- c(moduleSpecificObjs)
         } else {
-          browser()
+          #browser()
           objectsToEvaluateForCaching <- c(grep(ls(sim@.xData, all.names = TRUE),
                                                 pattern = mBase, value = TRUE),
                                            na.omit(moduleSpecificInputObjects))
